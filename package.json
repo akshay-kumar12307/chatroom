@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "htflow:dev": "htflow serve dev",
+    "htflow:build": "htflow build",
+    "htflow:audit": "htflow audit",
+    "htflow:init": "htflow init"
+  },
+  "htflow": {
+    "version": "1.9.4",
+    "rules": {
+      "html": {
+        "semanticElements": true,
+        "accessibility": true,
+        "webflowCompatible": true
+      },
+      "css": {
+        "vanillaOnly": true,
+        "noFrameworks": true,
+        "responsiveBreakpoints": [
+          991,
+          767,
+          479
+        ]
+      },
+      "javascript": {
+        "vanillaOnly": true,
+        "noFrameworks": true,
+        "modernES6": true
+      }
+    },
+    "project": {
+      "type": "htflow",
+      "webflowCompatible": true
+    }
+  }
+}

@@ -1,0 +1,319 @@
+---
+alwaysApply: false
+description: HTFlow JavaScript Examples - Comprehensive JavaScript examples and patterns for Webflow compatibility
+---
+
+# HTFlow JavaScript Rules
+
+## 🚨 CRITICAL HTFlow JavaScript Requirements - AI MUST NEVER IGNORE 🚨
+
+### 🛑 ABSOLUTE PROHIBITIONS - NEVER DO THESE 🛑
+
+❌ **NEVER use class selectors** (.class-name) in JavaScript
+❌ **NEVER use ID selectors** (#id-name) in JavaScript  
+❌ **NEVER use getElementById/getElementsByClassName** methods
+❌ **NEVER use 'var'** - use 'const' or 'let' only
+❌ **NEVER use function declarations** - use arrow functions only
+❌ **NEVER use getElementsByTagName** - use data-ht attributes
+
+### ✅ MANDATORY REQUIREMENTS - ALWAYS DO THESE ✅
+
+✅ **ALWAYS use data-ht-\* attributes** for DOM selection
+✅ **ALWAYS use [data-ht-*] selectors** in querySelector
+✅ **ALWAYS use const/let** instead of var
+✅ **ALWAYS use arrow functions** instead of function declarations
+✅ **ALWAYS use modern ES6+** JavaScript features
+
+## JavaScript Development Standards - CRITICAL ⚠️
+
+### DOM Selection and Interaction
+
+- **CRITICAL**: Use data-ht-\* attributes to select and interact with DOM elements
+  Example:
+
+  ```html
+  <!-- ✅ Good: Using data-ht attributes -->
+  <div class="product-card" data-ht-product-id="123">
+    <h3 class="product-title" data-ht-product-title>Product Name</h3>
+    <button class="add-to-cart-btn" data-ht-add-to-cart>Add to Cart</button>
+  </div>
+  ```
+
+  ```javascript
+  // ✅ Good: Selecting with data-ht attributes
+  document.querySelectorAll("[data-ht-add-to-cart]").forEach((button) => {
+    button.addEventListener("click", handleAddToCart);
+  });
+
+  // ❌ CRITICAL ERROR: Class-based selection FORBIDDEN
+  document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+    button.addEventListener("click", handleAddToCart);
+  });
+
+  // ❌ CRITICAL ERROR: ID-based selection FORBIDDEN
+  document
+    .getElementById("add-to-cart")
+    .addEventListener("click", handleAddToCart);
+
+  // ❌ CRITICAL ERROR: Old methods FORBIDDEN
+  document.getElementsByClassName("add-to-cart-btn");
+  ```
+
+### Event Handling
+
+- Implement hover-based animations in JavaScript instead of CSS
+  Example:
+
+  ```javascript
+  // ✅ Good: JavaScript hover handling with direct CSS manipulation
+  document.querySelectorAll("[data-ht-card]").forEach((card) => {
+    const image = card.querySelector("[data-ht-image]");
+    const title = card.querySelector("[data-ht-title]");
+
+    card.addEventListener("mouseenter", () => {
+      image.style.transform = "scale(1.05)";
+      image.style.transition = "transform 0.3s ease";
+      title.style.color = "#007bff";
+      title.style.fontWeight = "bold";
+    });
+
+    card.addEventListener("mouseleave", () => {
+      image.style.transform = "scale(1)";
+      title.style.color = "#333";
+      title.style.fontWeight = "normal";
+    });
+  });
+  ```
+
+### Hover Animation Implementation
+
+For hover-based animations like .card:hover .heading, implement in JavaScript with direct CSS manipulation:
+
+```javascript
+document.querySelectorAll("[data-ht-card]").forEach((card) => {
+  const heading = card.querySelector("[data-ht-heading]");
+
+  card.addEventListener("mouseenter", () => {
+    heading.style.transform = "translateY(-5px)";
+    heading.style.color = "#007bff";
+    heading.style.transition = "all 0.3s ease";
+  });
+
+  card.addEventListener("mouseleave", () => {
+    heading.style.transform = "translateY(0)";
+    heading.style.color = "#333";
+  });
+});
+```
+
+### Code Organization - STRICT RULES
+
+- **CRITICAL**: Use ES6+ features ONLY (const, let, arrow functions, template literals)
+  Example:
+
+  ```javascript
+  // ✅ Good: Modern JavaScript with data-ht attributes
+  const handleClick = (event) => {
+    const target = event.target;
+    const productId = target.dataset.productId;
+
+    if (productId) {
+      addToCart(productId);
+    }
+  };
+
+  // ✅ Good: Arrow function with data-ht selection
+  const initButtons = () => {
+    document.querySelectorAll("[data-ht-button]").forEach((button) => {
+      button.addEventListener("click", handleClick);
+    });
+  };
+
+  // ❌ CRITICAL ERROR: Function declarations FORBIDDEN
+  function handleClick(event) {
+    var target = event.target; // ❌ 'var' FORBIDDEN
+    var productId = target.getAttribute("data-ht-product-id");
+
+    if (productId) {
+      addToCart(productId);
+    }
+  }
+
+  // ❌ CRITICAL ERROR: Class selection FORBIDDEN
+  document.querySelectorAll(".button").forEach((button) => {
+    button.addEventListener("click", handleClick);
+  });
+
+  // ❌ CRITICAL ERROR: ID selection FORBIDDEN
+  document
+    .getElementById("submit-button")
+    .addEventListener("click", handleClick);
+  ```
+
+## JavaScript Validation Examples
+
+**✅ CORRECT Patterns:**
+
+```javascript
+// Data-ht attribute selection
+const buttons = document.querySelectorAll("[data-ht-cta]");
+const cards = document.querySelectorAll("[data-ht-card]");
+const forms = document.querySelectorAll("[data-ht-form]");
+
+// Modern ES6+ syntax
+const handleSubmit = (event) => {
+  const form = event.target.closest("[data-ht-form]");
+  const data = new FormData(form);
+  // Process form data
+};
+
+// Arrow functions
+const initComponents = () => {
+  buttons.forEach((button) => {
+    button.addEventListener("click", handleClick);
+  });
+};
+```
+
+**❌ FORBIDDEN Patterns:**
+
+```javascript
+// ❌ Class selectors FORBIDDEN
+document.querySelectorAll(".cta-button");
+document.querySelector(".submit-form");
+
+// ❌ ID selectors FORBIDDEN
+document.getElementById("submit-btn");
+document.querySelector("#contact-form");
+
+// ❌ Old methods FORBIDDEN
+document.getElementsByClassName("button");
+document.getElementsByTagName("form");
+
+// ❌ Old syntax FORBIDDEN
+var button = document.querySelector("[data-ht-button]");
+function handleClick() {
+  /* ... */
+}
+```
+
+## Performance
+
+- Minimize CSS and HTML file sizes.
+- Use CSS minification and compression.
+- Avoid excessive use of animations and transitions.
+- Use lazy loading for images and other media.
+  Example:
+
+  ```html
+  <!-- ✅ Good: Lazy loading -->
+  <img
+    src="placeholder.jpg"
+    data-ht-src="actual-image.jpg"
+    alt="Product"
+    class="product-image"
+    loading="lazy"
+  />
+
+  <script>
+    // Lazy loading implementation
+    const images = document.querySelectorAll("[data-ht-src]");
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.htSrc;
+          img.removeAttribute("data-ht-src");
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach((img) => imageObserver.observe(img));
+  </script>
+  ```
+
+## Common JavaScript Patterns
+
+### Form Handling
+
+```javascript
+// ✅ Good: Form handling with data-ht attributes
+document.querySelectorAll("[data-ht-form]").forEach((form) => {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    console.log("Form data:", data);
+    // Process form submission
+  });
+});
+```
+
+### Navigation
+
+```javascript
+// ✅ Good: Navigation with data-ht attributes
+document.querySelectorAll("[data-ht-nav-link]").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const target = event.target.getAttribute("href");
+    // Handle navigation
+    console.log("Navigate to:", target);
+  });
+});
+```
+
+### Modal/Dropdown Toggle
+
+```javascript
+// ✅ Good: Toggle functionality with data-ht attributes
+document.querySelectorAll("[data-ht-toggle]").forEach((toggle) => {
+  toggle.addEventListener("click", () => {
+    const target = toggle.getAttribute("data-ht-target");
+    const element = document.querySelector(`[data-ht-element="${target}"]`);
+
+    if (element) {
+      element.style.display =
+        element.style.display === "none" ? "block" : "none";
+    }
+  });
+});
+```
+
+### Animation with JavaScript
+
+```javascript
+// ✅ Good: Smooth animations with requestAnimationFrame
+const animateElement = (element, start, end, duration) => {
+  const startTime = performance.now();
+
+  const animate = (currentTime) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    const current = start + (end - start) * progress;
+    element.style.transform = `translateX(${current}px)`;
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    }
+  };
+
+  requestAnimationFrame(animate);
+};
+
+// Usage
+document.querySelectorAll("[data-ht-animate]").forEach((element) => {
+  element.addEventListener("click", () => {
+    animateElement(element, 0, 100, 1000);
+  });
+});
+```
+
+---
+
+_Generated by HTFlow CLI - These rules are automatically applied to all AI prompts in this project for Webflow-compatible JavaScript generation._

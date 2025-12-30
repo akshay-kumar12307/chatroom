@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="header">
+  <button class="back-btn" onclick="history.back()">⬅</button>
+  <img src="logo.png">
+  <h1 id="roomName"></h1>
+</div>
+
+<div id="chat-container">
+
+  <div id="sidebar">
+    <h3>Online</h3>
+    <div id="onlineUsers"></div>
+  </div>
+
+  <div id="chat-area">
+    <div id="messages"></div>
+    <div id="typing"></div>
+
+    <div id="input-bar">
+      <button onclick="pickEmoji()">😊</button>
+      <button onclick="file.click()">📎</button>
+      <button onclick="startVoice()">🎤</button>
+
+      <input id="msg" type="text" placeholder="Type a message">
+      <input id="file" type="file" hidden>
+
+      <button id="send-btn" onclick="send()">➤</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+</body>
+</html>

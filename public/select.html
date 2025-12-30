@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="form-box">
+  <h2>Select Chat</h2>
+
+  <button onclick="publicChat()">Public Chat</button>
+
+  <hr>
+
+  <input id="room" placeholder="Private room name">
+  <input id="pass" placeholder="Room password (optional)">
+  <button onclick="privateChat()">Private Chat</button>
+
+  <button class="back-btn" onclick="history.back()">⬅ Back</button>
+</div>
+
+<script>
+function publicChat() {
+  localStorage.setItem("room", "public");
+  localStorage.setItem("pass", "");
+  location.href = "chat.html";
+}
+
+function privateChat() {
+  const room = document.getElementById("room").value.trim();
+  if (!room) return alert("Enter room name");
+  localStorage.setItem("room", room);
+  localStorage.setItem("pass", document.getElementById("pass").value);
+  location.href = "chat.html";
+}
+</script>
+
+</body>
+</html>

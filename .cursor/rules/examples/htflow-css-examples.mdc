@@ -1,0 +1,435 @@
+---
+alwaysApply: false
+description: HTFlow CSS Examples - Comprehensive CSS examples and patterns for Webflow compatibility
+---
+
+# HTFlow CSS Rules
+
+## 🚨 CRITICAL HTFlow CSS Requirements - AI MUST NEVER IGNORE 🚨
+
+### 🛑 ABSOLUTE PROHIBITIONS - NEVER DO THESE 🛑
+
+❌ **NEVER use CSS frameworks** (Tailwind, Bootstrap, etc.) - VANILLA CSS ONLY
+❌ **NEVER use CSS variables** (custom properties like --color-primary)
+❌ **NEVER use background-image property** - use <img> with positioning
+❌ **NEVER use CSS shorthand properties** (margin: 10px 20px) - use longhand only
+❌ **NEVER use external CSS/JS files** - use internal <style> and <script> tags
+❌ **NEVER use emojis in code** - use inline SVG icons only
+❌ **NEVER skip data-ht-styles** on <style> tags
+❌ **NEVER use disallowed CSS properties in <style> tags** - only use HTFlow allowed properties
+❌ **NEVER style .htflow-wrapper** - it's purely structural for Webflow conversion
+❌ **NEVER use descendant CSS selectors** - style elements directly
+❌ **NEVER use responsive breakpoints** other than: 991px, 767px, 479px
+
+### ✅ MANDATORY REQUIREMENTS - ALWAYS DO THESE ✅
+
+✅ **ALWAYS use vanilla CSS** only
+✅ **ALWAYS use longhand CSS properties** (margin-top, margin-right, etc.)
+✅ **ALWAYS use internal tags** with data attributes
+✅ **ALWAYS use inline SVG** for icons instead of emojis
+✅ **ALWAYS validate with HTFlow tools** before finalizing code
+✅ **ALWAYS use only allowed CSS properties in <style> tags** - check with htflow_check_css_property
+✅ **ALWAYS validate CSS with htflow_validate_css** before finalizing
+✅ **ALWAYS use CSS Grid** with grid-template-rows: 1fr when using grid-template-columns
+
+## CSS Development Standards
+
+### Framework and Variable Rules
+
+- Do not use Tailwind classes or any CSS frameworks
+  Example:
+
+  ```html
+  <!-- ❌ Bad: Tailwind classes -->
+  <div class="flex items-center justify-between p-4 bg-blue-500 text-white">
+    <h1 class="text-2xl font-bold">Title</h1>
+  </div>
+
+  <!-- ✅ Good: Custom classes -->
+  <div class="header-container">
+    <h1 class="header-title">Title</h1>
+  </div>
+  ```
+
+- Do not use CSS variables (custom properties)
+  Example:
+
+  ```css
+  /* ❌ Bad: CSS variables */
+  :root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+  }
+  .button {
+    background-color: var(--primary-color);
+  }
+
+  /* ✅ Good: Direct values */
+  .button {
+    background-color: #007bff;
+  }
+  ```
+
+### CSS Property Restrictions
+
+- **CRITICAL**: Only use allowed CSS properties in `<style>` tags
+- **JavaScript CSS**: Can use any CSS properties (with warnings)
+- **Style Tag CSS**: Must use only HTFlow allowed properties
+
+### HTFlow Wrapper Rule
+
+- **ABSOLUTE PROHIBITION**: `.htflow-wrapper` should NEVER have CSS styling rules
+- **Purpose**: `.htflow-wrapper` is purely structural - only used for Webflow conversion identification
+- **Rule**: Users must create their own container classes for styling
+
+Example:
+
+```css
+/* ❌ FORBIDDEN: Never style htflow-wrapper */
+.htflow-wrapper {
+  background-color: #f0f0f0; /* ❌ NEVER DO THIS */
+  padding: 20px; /* ❌ NEVER DO THIS */
+  margin: 10px; /* ❌ NEVER DO THIS */
+}
+
+/* ✅ CORRECT: Create your own container classes */
+.page-container {
+  background-color: #f0f0f0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+```
+
+```html
+<!-- ✅ CORRECT: Use htflow-wrapper only for structure -->
+<div class="htflow-wrapper">
+  <div class="page-container">
+    <!-- Your styled content here -->
+  </div>
+</div>
+```
+
+#### Allowed CSS Properties for <style> tags:
+
+```css
+/* ✅ ALLOWED Properties (150+ total) */
+align-content, align-items, align-self
+background-attachment, background-blend-mode, background-clip
+background-color, background-origin, background-position
+background-position-x, background-position-y, background-repeat, background-size
+border-bottom-color, border-bottom-left-radius, border-bottom-right-radius
+border-bottom-style, border-bottom-width, border-left-color, border-left-style
+border-left-width, border-right-color, border-right-style, border-right-width
+border-top-color, border-top-left-radius, border-top-right-radius
+border-top-style, border-top-width, bottom, box-shadow
+clip, clip-path, clip-rule, color, cursor, direction, display
+empty-cells, fill, fill-opacity, fill-rule, filter
+flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap
+font-family, font-size, font-stretch, font-style, font-weight
+grid-auto-columns, grid-auto-flow, grid-auto-rows, grid-column-end
+grid-column-gap, grid-column-start, grid-row-end, grid-row-gap
+grid-row-start, grid-template-areas, grid-template-columns, grid-template-rows
+height, image-orientation, image-rendering, inline-size
+justify-content, justify-items, justify-self, left, letter-spacing
+list-style-image, list-style-position, list-style-type
+margin-bottom, margin-left, margin-right, margin-top
+max-height, max-width, min-height, min-width, mix-blend-mode
+object-fit, object-position, offset-anchor, offset-distance
+offset-path, offset-rotate, opacity, order
+outline-color, outline-offset, outline-style, outline-width
+overflow-wrap, overflow-x, overflow-y
+padding-bottom, padding-left, padding-right, padding-top
+perspective, perspective-origin, pointer-events, position, quotes, right
+scroll-behavior, shape-rendering, stop-color, stop-opacity
+stroke, stroke-dasharray, stroke-dashoffset, stroke-linecap
+stroke-linejoin, stroke-miterlimit, stroke-opacity, stroke-width
+table-layout, text-align, text-anchor, text-decoration
+text-decoration-color, text-decoration-line, text-decoration-skip-ink
+text-decoration-style, text-decoration-thickness, text-emphasis-color
+text-emphasis-position, text-emphasis-style, text-indent, text-justify
+text-orientation, text-overflow, text-rendering, text-shadow
+text-transform, top, transform, transform-box, transform-origin
+transform-style, transition, transition-delay, transition-duration
+transition-property, transition-timing-function, unicode-bidi
+visibility, white-space, width, word-break, word-spacing
+word-wrap, z-index
+```
+
+#### Examples:
+
+```html
+<!-- ✅ Good: Using allowed CSS properties in <style> -->
+<style data-ht-styles>
+  .hero-section {
+    background-color: #f0f0f0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  .hero-title {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+</style>
+
+<!-- ❌ Bad: Using disallowed CSS properties in <style> -->
+<style data-ht-styles>
+  .hero-section {
+    background-image: url("hero.jpg"); /* ❌ NOT ALLOWED */
+    margin: 20px 10px; /* ❌ Shorthand not allowed */
+    --primary-color: #007bff; /* ❌ CSS variables not allowed */
+  }
+</style>
+
+<!-- ✅ Good: JavaScript CSS can use any properties -->
+<script data-ht-main-script>
+  document.querySelector(".hero-section").style.backgroundImage =
+    'url("hero.jpg")';
+  document.querySelector(".hero-section").style.margin = "20px 10px";
+</script>
+```
+
+### Property Usage
+
+- Do not use background-image property. Use `<img>` element with absolute positioning instead.
+  Example:
+
+  ```css
+  /* ❌ Bad: Using background-image */
+  .hero {
+    background-image: url("image.jpg");
+    background-size: cover;
+    height: 500px;
+  }
+
+  /* ✅ Good: Using <img> with absolute positioning */
+  .hero {
+    position: relative;
+    height: 500px;
+  }
+  .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  ```
+
+  ```html
+  <!-- ✅ Good: Image element with absolute positioning -->
+  <div class="hero">
+    <img class="hero-image" src="image.jpg" alt="Hero section background" />
+    <div class="hero-content">
+      <!-- Content goes here -->
+    </div>
+  </div>
+  ```
+
+  This approach:
+
+  - Improves SEO by using semantic HTML
+  - Allows proper image loading and optimization
+  - Provides better accessibility with alt text
+  - Maintains consistent behavior in Webflow
+
+- Do not use shorthand properties (e.g., margin: 10px 20px)
+  Example:
+
+  ```css
+  /* ❌ Bad: Shorthand properties */
+  .card {
+    margin: 20px 10px;
+    padding: 15px 10px;
+    border: 1px solid #ccc;
+  }
+
+  /* ✅ Good: Longhand properties */
+  .card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ccc;
+  }
+  ```
+
+- For grid layouts, follow these rules:
+
+  1. Use explicit values for grid-template-columns (like 1fr 1fr 1fr)
+  2. Always include grid-template-rows: 1fr (required)
+  3. Never omit grid-template-rows
+  4. Never use any value other than 1fr for grid-template-rows
+
+  Example:
+
+  ```css
+  /* ✅ Good: Explicit columns and required 1fr rows */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr; /* Required */
+    gap: 20px;
+  }
+
+  /* ❌ Bad: Missing or incorrect grid-template-rows */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Missing grid-template-rows: 1fr */
+  }
+
+  /* ❌ Bad: Wrong value for grid-template-rows */
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto; /* Must be 1fr */
+  }
+  ```
+
+### Responsive Design
+
+Use only these responsive breakpoints:
+
+- Tablet: @media (max-width: 991px)
+- Mobile Landscape: @media (max-width: 767px)
+- Mobile Portrait: @media (max-width: 479px)
+
+Example:
+
+```css
+/* Desktop styles (default) */
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  padding: 40px;
+}
+
+/* Tablet styles */
+@media (max-width: 991px) {
+  .card {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 30px;
+  }
+}
+
+/* Mobile Landscape */
+@media (max-width: 767px) {
+  .card {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
+  }
+}
+
+/* Mobile Portrait */
+@media (max-width: 479px) {
+  .card {
+    gap: 10px;
+    padding: 15px;
+  }
+}
+```
+
+### Selector and Pseudo-class Rules
+
+- Avoid all CSS pseudo-classes except :hover
+- Do not use ::before, ::after, or other pseudo-elements
+  Example:
+
+  ```css
+  /* ❌ Bad: Pseudo-elements */
+  .button::before {
+    content: "→";
+    margin-right: 5px;
+  }
+
+  /* ✅ Good: Use actual HTML elements */
+  <button class="button">
+    <span class="button-icon">→</span>
+    <span class="button-text">Click Me</span>
+  </button>
+  ```
+
+- Avoid animations using descendant hover selectors like .card:hover .heading
+- Instead, use JavaScript for hover-based animations
+  Example:
+
+  ```javascript
+  // ✅ Good: JavaScript hover animation with direct CSS manipulation
+  document.querySelectorAll("[data-ht-card]").forEach((card) => {
+    const heading = card.querySelector("[data-ht-heading]");
+
+    card.addEventListener("mouseenter", () => {
+      heading.style.transform = "translateY(-5px)";
+      heading.style.color = "#007bff";
+      heading.style.transition = "all 0.3s ease";
+    });
+
+    card.addEventListener("mouseleave", () => {
+      heading.style.transform = "translateY(0)";
+      heading.style.color = "#333";
+    });
+  });
+  ```
+
+### Layout and Positioning
+
+- Use CSS Grid and Flexbox for modern layouts
+  Example:
+
+  ```css
+  /* ✅ Good: CSS Grid layout */
+  .page-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 1fr; /* Always required */
+    min-height: 100vh;
+  }
+
+  /* ✅ Good: Flexbox layout */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  ```
+
+- Use relative units (rem, em) for typography and spacing
+  Example:
+
+  ```css
+  /* ✅ Good: Relative units */
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2em;
+  }
+
+  /* ❌ Bad: Fixed units for typography */
+  .title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+  ```
+
+---
+
+_Generated by HTFlow CLI - These rules are automatically applied to all AI prompts in this project for Webflow-compatible CSS generation._

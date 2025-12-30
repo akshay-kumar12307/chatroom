@@ -1,0 +1,446 @@
+---
+alwaysApply: false
+description: HTFlow HTML Examples - Comprehensive HTML examples and patterns for Webflow compatibility
+---
+
+# HTFlow HTML Rules
+
+## 🚨 CRITICAL HTFlow HTML Requirements - AI MUST NEVER IGNORE 🚨
+
+### 🛑 ABSOLUTE PROHIBITIONS - NEVER DO THESE 🛑
+
+❌ **NEVER skip data-ht-styles** on <style> tags
+❌ **NEVER skip data-ht-main-script** on <script> tags
+❌ **NEVER create HTML elements without class names** - every element must have a class
+❌ **NEVER use IDs for styling or JavaScript targeting**
+❌ **NEVER use emojis in code** - use inline SVG icons only
+❌ **NEVER skip htflow-wrapper** - wrap ALL content in `<div class="htflow-wrapper">`
+
+### ✅ MANDATORY REQUIREMENTS - ALWAYS DO THESE ✅
+
+✅ **ALWAYS wrap ALL content** in `<div class="htflow-wrapper">`
+✅ **ALWAYS use semantic HTML** elements
+✅ **ALWAYS give every styled element** its own class name  
+✅ **ALWAYS use internal tags** with data attributes
+✅ **ALWAYS use inline SVG** for icons instead of emojis
+✅ **ALWAYS validate with HTFlow tools** before finalizing code
+
+## HTML Development Standards
+
+### Structure Requirements
+
+- Wrap all content inside the <body> with a parent <div class="htflow-wrapper">
+  Example:
+
+  ```html
+  <body>
+    <div class="htflow-wrapper">
+      <header class="site-header">
+        <nav class="main-navigation">
+          <!-- Navigation content -->
+        </nav>
+      </header>
+      <main class="main-content">
+        <!-- Main content -->
+      </main>
+      <footer class="site-footer">
+        <!-- Footer content -->
+      </footer>
+    </div>
+  </body>
+  ```
+
+- Every styled element must have its own class name
+  Example:
+
+  ```html
+  <!-- ✅ Good: Each element has its own class -->
+  <div class="card">
+    <h2 class="card_title">Card Title</h2>
+    <p class="card_description">Card description</p>
+    <button class="card_button">Learn More</button>
+  </div>
+
+  <!-- ❌ Bad: Using descendant selectors -->
+  <div class="card">
+    <h2>Card Title</h2>
+    <!-- No class -->
+    <p>Card description</p>
+    <!-- No class -->
+  </div>
+  ```
+
+- Use semantic HTML elements where appropriate
+  Example:
+
+  ```html
+  <!-- ✅ Good: Semantic structure -->
+  <header class="site-header">
+    <nav class="main-navigation">
+      <ul class="nav-list">
+        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="page_home">
+    <section class="section_team">
+      <!-- Content -->
+      <div class="team_card"></div>
+    </section>
+  </main>
+  <footer class="section_footer">
+    <!-- Footer content -->
+  </footer>
+  ```
+
+### Class Naming Conventions
+
+- Use descriptive, semantic class names
+  Example:
+
+  ```html
+  <!-- ✅ Good: Descriptive names -->
+  <div class="product_card">
+    <img class="product_image" src="product.jpg" alt="Product" />
+    <h3 class="product_title">Product Name</h3>
+    <p class="product_price">$99.99</p>
+  </div>
+
+  <!-- ❌ Bad: Generic names -->
+  <div class="card">
+    <img class="img" src="product.jpg" alt="Product" />
+    <h3 class="title">Product Name</h3>
+    <p class="text">$99.99</p>
+  </div>
+  ```
+
+- Follow BEM methodology when appropriate
+  Example:
+
+  ```html
+  <!-- BEM: Block__Element--Modifier -->
+  <div class="card">
+    <h2 class="card__title">Card Title</h2>
+    <p class="card__description">Description</p>
+    <button class="card__button card__button--primary">Click Me</button>
+  </div>
+  ```
+
+## HTML Best Practices
+
+- Use semantic elements (e.g., <header>, <main>, <footer>, <article>, <section>).
+- Use <button> for clickable elements, not <div> or <span>.
+  Example:
+
+  ```html
+  <!-- ✅ Good: Proper button element -->
+  <a class="button_cta" type="button">Click Me</a>
+
+  <!-- ❌ Bad: Using div for button -->
+  <div class="cta-button" onclick="handleClick()">Click Me</div>
+  ```
+
+- Use <a> for links, ensuring href attribute is present.
+  Example:
+
+  ```html
+  <!-- ✅ Good: Proper link -->
+  <a href="/about" class="nav-link">About Us</a>
+
+  <!-- ❌ Bad: Missing href -->
+  <a class="nav-link">About Us</a>
+  ```
+
+- Use <img> with alt attribute for images.
+  Example:
+
+  ```html
+  <!-- ✅ Good: With alt text -->
+  <img src="hero-image.jpg" alt="Hero section background" class="hero-image" />
+
+  <!-- ❌ Bad: Missing alt -->
+  <img src="hero-image.jpg" class="hero-image" />
+  ```
+
+### Container Consistency Rules
+
+- **CRITICAL**: Use the same container class name across all sections
+  Example:
+
+  ```html
+  <!-- ✅ Good: Consistent container class -->
+  <section class="hero-section">
+    <div class="container-large">
+      <!-- Hero content -->
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="container-large">
+      <!-- Features content -->
+    </div>
+  </section>
+
+  <section class="footer-section">
+    <div class="container-large">
+      <!-- Footer content -->
+    </div>
+  </section>
+
+  <!-- ❌ Bad: Inconsistent container classes -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <!-- Hero content -->
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="features-wrapper">
+      <!-- Features content -->
+    </div>
+  </section>
+
+  <section class="footer-section">
+    <div class="footer-box">
+      <!-- Footer content -->
+    </div>
+  </section>
+  ```
+
+- **CRITICAL**: Wrap multiple elements inside container with content wrapper
+  Example:
+
+  ```html
+  <!-- ✅ Good: Container with content wrapper -->
+  <section class="hero-section">
+    <div class="container-large">
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome</h1>
+        <p class="hero-description">Description text</p>
+        <button class="hero-button">Click Me</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ❌ Bad: Multiple elements directly in container -->
+  <section class="hero-section">
+    <div class="container-large">
+      <h1 class="hero-title">Welcome</h1>
+      <p class="hero-description">Description text</p>
+      <button class="hero-button">Click Me</button>
+    </div>
+  </section>
+  ```
+
+- **CRITICAL**: Use consistent section header wrapper for headings + descriptions
+  Example:
+
+  ```html
+  <!-- ✅ Good: Consistent section header wrapper -->
+  <section class="features-section">
+    <div class="container-large">
+      <div class="section-header">
+        <h2 class="section-title">Our Features</h2>
+        <p class="section-description">Discover what makes us special</p>
+      </div>
+      <div class="features-grid">
+        <!-- Feature items -->
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="container-large">
+      <div class="section-header">
+        <h2 class="section-title">Client Testimonials</h2>
+        <p class="section-description">What our clients say about us</p>
+      </div>
+      <div class="testimonials-grid">
+        <!-- Testimonial items -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ❌ Bad: Inconsistent section header wrappers -->
+  <section class="features-section">
+    <div class="container-large">
+      <div class="features-intro">
+        <h2 class="features-title">Our Features</h2>
+        <p class="features-description">Discover what makes us special</p>
+      </div>
+      <!-- Content -->
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <div class="container-large">
+      <div class="testimonials-header">
+        <h2 class="testimonials-title">Client Testimonials</h2>
+        <p class="testimonials-description">What our clients say about us</p>
+      </div>
+      <!-- Content -->
+    </div>
+  </section>
+  ```
+
+- Use internal `<style>` and `<script>` tags within the same HTML page, not external files
+  Example:
+
+  ```html
+  <!-- ✅ Good: Internal style and script tags -->
+  <head>
+    <style data-ht-styles>
+      .hero-section {
+        background-color: #f0f0f0;
+        padding: 40px;
+        text-align: center;
+      }
+      .hero-title {
+        color: #333;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="htflow-wrapper">
+      <div class="hero-section">
+        <h1 class="hero-title">Welcome</h1>
+      </div>
+    </div>
+    <script data-ht-main-script>
+      // Page-specific JavaScript
+      console.log("Hello World");
+    </script>
+  </body>
+
+  <!-- ❌ Bad: External CSS and JS files -->
+  <head>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="htflow-wrapper">
+      <div class="hero-section">
+        <h1 class="hero-title">Welcome</h1>
+      </div>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+  ```
+
+- Always add `data-ht-styles` attribute to all `<style>` tags
+  Example:
+
+  ```html
+  <!-- ✅ Good: Style with data-ht-styles attribute -->
+  <style data-ht-styles>
+    .hero-section {
+      background-color: #f0f0f0;
+      padding: 40px;
+    }
+  </style>
+
+  <!-- ❌ Bad: Style without data-ht-styles attribute -->
+  <style>
+    .hero-section {
+      background-color: #f0f0f0;
+      padding: 40px;
+    }
+  </style>
+  ```
+
+- Always add `data-ht-main-script` attribute to all `<script>` tags
+  Example:
+
+  ```html
+  <!-- ✅ Good: Script with data-ht-main-script attribute -->
+  <script data-ht-main-script>
+    // Inline JavaScript
+    console.log("Hello World");
+  </script>
+
+  <!-- ❌ Bad: Script without data-ht-main-script attribute -->
+  <script>
+    console.log("Hello World");
+  </script>
+  ```
+
+### Icons and Emojis
+
+- Never use emojis. Use inline SVG icons instead for all UI and content.
+  Example:
+
+  ```html
+  <!-- ❌ Bad: Emoji used in UI -->
+  <button class="status_badge">✅ Success</button>
+
+  <!-- ✅ Good: Inline SVG icon with accessible markup -->
+  <button class="status_badge">
+    <span class="status_badge_icon" role="img" aria-label="success">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M20 6L9 17l-5-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+    <span class="status_badge_text">Success</span>
+  </button>
+  ```
+
+  This approach:
+
+  - Ensures consistent rendering across platforms and browsers
+  - Improves accessibility with `role="img"` and `aria-label`
+  - Provides full design control via CSS (size, color, transitions)
+  - Avoids Unicode encoding issues in different environments
+
+## Accessibility
+
+- Use ARIA roles and attributes to enhance accessibility.
+  Example:
+
+  ```html
+  <!-- ✅ Good: ARIA attributes -->
+  <nav class="main-navigation" role="navigation" aria-label="Main navigation">
+    <ul class="nav-list" role="menubar">
+      <li class="nav-item" role="none">
+        <a href="/" class="nav-link" role="menuitem" aria-current="page"
+          >Home</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <button class="menu-toggle" aria-expanded="false" aria-controls="main-menu">
+    <span class="sr-only">Toggle menu</span>
+    <span class="hamburger-icon"></span>
+  </button>
+  ```
+
+- Ensure sufficient color contrast for text.
+- Provide keyboard navigation for interactive elements.
+- Use focus styles to indicate focus state.
+  Example:
+
+  ```css
+  /* ✅ Good: Focus styles */
+  .button:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+
+  .nav-link:focus {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  ```
+
+---
+
+_Generated by HTFlow CLI - These rules are automatically applied to all AI prompts in this project for Webflow-compatible HTML generation._

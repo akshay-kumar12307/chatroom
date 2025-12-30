@@ -1,0 +1,66 @@
+---
+alwaysApply: true
+description: HTFlow JavaScript Essentials - Ultra-minimal JavaScript rules for Webflow compatibility
+---
+
+# HTFlow JavaScript Essentials
+
+## 🚨 CRITICAL - NEVER IGNORE 🚨
+
+### ABSOLUTE PROHIBITIONS
+
+❌ **NEVER use class selectors** (.class-name) in JavaScript
+❌ **NEVER use ID selectors** (#id-name) in JavaScript
+❌ **NEVER use getElementById/getElementsByClassName** methods
+❌ **NEVER use 'var'** - use 'const' or 'let' only
+❌ **NEVER use function declarations** - use arrow functions only
+❌ **NEVER use getElementsByTagName** - use data-ht attributes
+
+### MANDATORY REQUIREMENTS
+
+✅ **ALWAYS use data-ht-\* attributes** for DOM selection
+✅ **ALWAYS use [data-ht-*] selectors** in querySelector
+✅ **ALWAYS use const/let** instead of var
+✅ **ALWAYS use arrow functions** instead of function declarations
+✅ **ALWAYS use modern ES6+** JavaScript features
+
+## Core Rules
+
+```javascript
+// ✅ Good: data-ht attribute selection
+document.querySelectorAll("[data-ht-button]").forEach((button) => {
+  button.addEventListener("click", handleClick);
+});
+
+// ❌ FORBIDDEN: Class-based selection
+document.querySelectorAll(".button").forEach((button) => {
+  button.addEventListener("click", handleClick);
+});
+```
+
+```javascript
+// ✅ Good: Modern JavaScript
+const handleClick = (event) => {
+  const target = event.target;
+  const data = target.dataset.htData;
+};
+
+// ❌ FORBIDDEN: Old syntax
+function handleClick(event) {
+  var target = event.target;
+  var data = target.getAttribute("data-ht-data");
+}
+```
+
+## Rules
+
+- Use data-ht-\* attributes for ALL DOM selection
+- Use arrow functions only (no function declarations)
+- Use const/let only (no var)
+- Use ES6+ features only
+- Use JavaScript for hover animations (not CSS)
+- Use requestAnimationFrame for animations
+
+---
+
+_HTFlow CLI - Ultra-minimal JavaScript rules._

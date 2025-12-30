@@ -1,0 +1,74 @@
+---
+alwaysApply: true
+description: HTFlow CSS Essentials - Ultra-minimal CSS rules for Webflow compatibility
+---
+
+# HTFlow CSS Essentials
+
+## 🚨 CRITICAL - NEVER IGNORE 🚨
+
+### ABSOLUTE PROHIBITIONS
+
+❌ **NEVER use CSS frameworks** (Tailwind, Bootstrap) - VANILLA CSS ONLY
+❌ **NEVER use CSS variables** (--color-primary)
+❌ **NEVER use background-image** - use <img> with positioning
+❌ **NEVER use CSS shorthand** (margin: 10px 20px) - use longhand only
+❌ **NEVER use external CSS/JS files** - internal <style> and <script> only
+❌ **NEVER style .htflow-wrapper** - it's structural only
+❌ **NEVER use responsive breakpoints** other than: 991px, 767px, 479px
+
+### MANDATORY REQUIREMENTS
+
+✅ **ALWAYS use vanilla CSS** only
+✅ **ALWAYS use longhand CSS properties** (margin-top, margin-right, etc.)
+✅ **ALWAYS use internal tags** with data attributes
+✅ **ALWAYS use CSS Grid** with grid-template-rows: 1fr when using grid-template-columns
+
+## Core Rules
+
+```css
+/* ✅ Good: Longhand properties */
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc;
+}
+
+/* ✅ Good: Required grid-template-rows */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr; /* Required */
+  gap: 20px;
+}
+```
+
+```css
+/* Responsive breakpoints ONLY */
+@media (max-width: 991px) {
+  /* Tablet */
+}
+@media (max-width: 767px) {
+  /* Mobile Landscape */
+}
+@media (max-width: 479px) {
+  /* Mobile Portrait */
+}
+```
+
+## Rules
+
+- Use longhand properties only (no shorthand)
+- Grid must include grid-template-rows: 1fr
+- Use <img> with absolute positioning for backgrounds
+- No ::before, ::after, or pseudo-elements
+- Use JavaScript for hover animations
+- Use relative units (rem, em) for typography
+
+---
+
+_HTFlow CLI - Ultra-minimal CSS rules._

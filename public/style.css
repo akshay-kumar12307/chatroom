@@ -1,0 +1,350 @@
+/* ======================
+   GLOBAL RESET
+====================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(135deg, #5b1cff, #8a2be2);
+  height: 100vh;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* ======================
+   HEADER / LOGO
+====================== */
+#header {
+  height: 60px;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#header img {
+  height: 38px;
+  width: auto;
+}
+
+#header h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ======================
+   CHAT CONTAINER
+====================== */
+#chat-container {
+  display: flex;
+  height: calc(100vh - 60px);
+}
+
+/* ======================
+   ONLINE USERS SIDEBAR
+====================== */
+#sidebar {
+  width: 240px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  overflow-y: auto;
+}
+
+#sidebar h3 {
+  font-size: 14px;
+  margin-bottom: 12px;
+  opacity: 0.85;
+}
+
+.user {
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.user:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ======================
+   CHAT AREA
+====================== */
+#chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* ======================
+   MESSAGES
+====================== */
+#messages {
+  flex: 1;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 70%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  position: relative;
+  animation: fadeIn 0.2s ease;
+}
+
+.message.me {
+  margin-left: auto;
+  background: linear-gradient(135deg, #7b2cff, #9a4dff);
+}
+
+.message.other {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.message .name {
+  font-size: 11px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.message .ticks {
+  font-size: 11px;
+  opacity: 0.6;
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+}
+
+/* ======================
+   INPUT BAR
+====================== */
+#input-bar {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#input-bar button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+#input-bar button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#input-bar input[type="text"] {
+  flex: 1;
+  height: 42px;
+  border-radius: 22px;
+  border: none;
+  padding: 0 16px;
+  font-size: 14px;
+  outline: none;
+}
+
+#input-bar input[type="file"] {
+  display: none;
+}
+
+#send-btn {
+  background: linear-gradient(135deg, #7b2cff, #b066ff);
+  padding: 10px 14px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+#send-btn:hover {
+  transform: scale(1.08);
+}
+
+/* ======================
+   TYPING INDICATOR
+====================== */
+#typing {
+  font-size: 12px;
+  padding: 4px 18px;
+  opacity: 0.7;
+}
+
+/* ======================
+   FORMS (NAME / ROOM)
+====================== */
+.form-box {
+  max-width: 360px;
+  margin: 80px auto;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 25px;
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+}
+
+.form-box input,
+.form-box button {
+  width: 100%;
+  height: 44px;
+  border-radius: 22px;
+  border: none;
+  margin-bottom: 12px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+.form-box button {
+  background: linear-gradient(135deg, #7b2cff, #b066ff);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.form-box button:hover {
+  transform: scale(1.04);
+}
+
+/* ======================
+   ANIMATIONS
+====================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+@media (max-width: 768px) {
+  #sidebar {
+    display: none;
+  }
+
+  .message {
+    max-width: 85%;
+  }
+}
+/* Logo size (header + forms) */
+.logo,
+#header img {
+  height: 32px;   /* 👈 smaller, clean */
+  width: auto;
+}
+/* ============================= */
+/* SAFE COLOR OVERRIDES ONLY     */
+/* NO LAYOUT CHANGES GUARANTEED */
+/* ============================= */
+
+body {
+  background: #1A001A !important;
+  color: #D1D1D1;
+}
+
+/* ---------- Cards / Containers ---------- */
+.card,
+.container,
+.box,
+.panel {
+  background: linear-gradient(180deg, #2A0030, #1A001A) !important;
+  color: #D1D1D1;
+}
+
+/* ---------- Headers / Titles ---------- */
+h1, h2, h3, .title, .header-title {
+  color: #FF00FF !important;
+}
+
+/* ---------- Buttons ---------- */
+button,
+.btn,
+.primary-btn {
+  background: #A020F0 !important;
+  color: #ffffff !important;
+  border: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+button:hover,
+.btn:hover,
+.primary-btn:hover {
+  background: #B84CFF !important;
+  transform: translateY(-1px);
+}
+
+/* ---------- Inputs ---------- */
+input,
+textarea {
+  background: #1E1E1E !important;
+  color: #D1D1D1 !important;
+  border: 1px solid #3A003A;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9A9A9A;
+}
+
+/* ---------- Chat Header ---------- */
+.chat-header {
+  background: #2A0030 !important;
+  color: #FF00FF !important;
+}
+
+/* ---------- Online Sidebar ---------- */
+.sidebar {
+  background: #2A0030 !important;
+  color: #D1D1D1;
+}
+
+/* ---------- Message Area ---------- */
+.chat-area {
+  background: linear-gradient(180deg, #2A0030, #1A001A) !important;
+}
+
+/* ---------- Message Bubble ---------- */
+.message {
+  background: #3A0040;
+  color: #D1D1D1;
+}
+
+/* ---------- Emoji / Icons Hover ---------- */
+.icon:hover,
+.emoji-btn:hover {
+  color: #FF00FF;
+  transform: scale(1.1);
+}
+
+/* ---------- Send Button ---------- */
+.send-btn {
+  background: #A020F0 !important;
+}
+
+.send-btn:hover {
+  background: #FF00FF !important;
+}

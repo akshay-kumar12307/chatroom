@@ -1,0 +1,57 @@
+---
+alwaysApply: true
+description: HTFlow HTML Essentials - Ultra-minimal HTML rules for Webflow compatibility
+---
+
+# HTFlow HTML Essentials
+
+## 🚨 CRITICAL - NEVER IGNORE 🚨
+
+### ABSOLUTE PROHIBITIONS
+
+❌ **NEVER skip data-ht-styles** on <style> tags
+❌ **NEVER skip data-ht-main-script** on <script> tags  
+❌ **NEVER create HTML elements without class names**
+❌ **NEVER use IDs for styling or JavaScript**
+❌ **NEVER use emojis** - use inline SVG only
+❌ **NEVER skip htflow-wrapper** - wrap ALL content
+
+### MANDATORY REQUIREMENTS
+
+✅ **ALWAYS wrap ALL content** in `<div class="htflow-wrapper">`
+✅ **ALWAYS use semantic HTML** elements
+✅ **ALWAYS give every styled element** its own class name
+✅ **ALWAYS use internal tags** with data attributes
+✅ **ALWAYS use inline SVG** for icons
+
+## Core Structure
+
+```html
+<body>
+  <div class="htflow-wrapper">
+    <!-- ALL CONTENT HERE -->
+  </div>
+</body>
+```
+
+```html
+<!-- REQUIRED ATTRIBUTES -->
+<style data-ht-styles>
+  /* CSS */
+</style>
+<script data-ht-main-script>
+  /* JS */
+</script>
+```
+
+## Rules
+
+- Every element MUST have a class name
+- Use `<header>`, `<main>`, `<footer>`, `<section>`
+- Use `<button>` for clicks, `<a>` for links, `<img>` with alt
+- Use same container class across sections (e.g., `container-large`)
+- Never use emojis - use SVG icons only
+
+---
+
+_HTFlow CLI - Ultra-minimal HTML rules._
