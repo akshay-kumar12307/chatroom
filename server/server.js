@@ -10,15 +10,17 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
-/* ---------- STATIC (FIXED) ---------- */
-// ⬇️ go UP one level from server → public
+/* 🔥 IMPORTANT: CORRECT PUBLIC PATH */
 const publicPath = path.join(__dirname, "../public");
-app.use(express.static(publicPath));
 
+/* ---------- STATIC FILES ---------- */
+app.use(express.static(publicPath));
+app.use(express.json());
+
+/* 🔥 ROOT ROUTE (THIS FIXES THE BLANK PAGE) */
 app.get("/", (req, res) => {
   res.sendFile(path.join(publicPath, "index.html"));
 });
-
 app.use(express.json());
 
 /* ---------- FILE UPLOAD ---------- */

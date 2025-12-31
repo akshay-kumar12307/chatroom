@@ -2,12 +2,12 @@
 <html>
 <head>
   <title>ChatLab</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
 <div class="form-box">
-  <img src="logo.png" class="logo">
+  <img src="/logo.png" class="logo">
   <h2>Enter your name</h2>
 
   <input id="name" type="text" placeholder="Your name">
@@ -19,7 +19,7 @@ function go() {
   const n = document.getElementById("name").value.trim();
   if (!n) return alert("Enter name");
   localStorage.setItem("name", n);
-  location.href = "select.html";
+  location.href = "/select.html";
 }
 </script>
 
