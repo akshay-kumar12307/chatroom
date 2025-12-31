@@ -10,8 +10,15 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
-/* ---------- STATIC ---------- */
-app.use(express.static(path.join(__dirname, "public")));
+/* ---------- STATIC (FIXED) ---------- */
+// ⬇️ go UP one level from server → public
+const publicPath = path.join(__dirname, "../public");
+app.use(express.static(publicPath));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
+
 app.use(express.json());
 
 /* ---------- FILE UPLOAD ---------- */
@@ -23,28 +30,15 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 /* ---------- IN-MEMORY STORAGE ---------- */
-
-// rooms = {
-//   roomName: { password, admin }
-// }
 const rooms = {};
-
-// messages = {
-//   roomName: [ messageObj ]
-// }
 const messages = {};
-
-// online users
-// socketId → { name, room }
 const onlineUsers = {};
 
 /* ---------- SOCKET ---------- */
 io.on("connection", socket => {
 
-  /* JOIN ROOM */
   socket.on("join", ({ name, room, password }) => {
 
-    // create room if not exists
     if (!rooms[room]) {
       rooms[room] = {
         password: password || null,
@@ -53,7 +47,6 @@ io.on("connection", socket => {
       messages[room] = [];
     }
 
-    // password check
     if (rooms[room].password && rooms[room].password !== password) {
       socket.emit("errorMsg", "Wrong room password");
       return;
@@ -65,17 +58,14 @@ io.on("connection", socket => {
 
     onlineUsers[socket.id] = { name, room };
 
-    // send online users
     io.to(room).emit(
       "onlineUsers",
       Object.values(onlineUsers).filter(u => u.room === room)
     );
 
-    // load previous messages
     socket.emit("loadMessages", messages[room]);
   });
 
-  /* SEND MESSAGE */
   socket.on("sendMessage", msg => {
     if (!msg.text && !msg.file) return;
 
@@ -89,11 +79,9 @@ io.on("connection", socket => {
     };
 
     messages[socket.room].push(message);
-
     io.to(socket.room).emit("newMessage", message);
   });
 
-  /* TYPING */
   socket.on("typing", state => {
     socket.to(socket.room).emit("typing", {
       user: socket.username,
@@ -101,7 +89,6 @@ io.on("connection", socket => {
     });
   });
 
-  /* READ RECEIPTS */
   socket.on("read", id => {
     const roomMsgs = messages[socket.room];
     const m = roomMsgs.find(m => m.id === id);
@@ -111,7 +98,6 @@ io.on("connection", socket => {
     }
   });
 
-  /* DISCONNECT */
   socket.on("disconnect", () => {
     const user = onlineUsers[socket.id];
     delete onlineUsers[socket.id];
@@ -123,7 +109,6 @@ io.on("connection", socket => {
       );
     }
   });
-
 });
 
 /* ---------- START ---------- */
