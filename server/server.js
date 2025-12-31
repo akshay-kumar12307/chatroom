@@ -1,39 +1,60 @@
-require("dotenv").config();
 const express = require("express");
 const http = require("http");
-const mongoose = require("mongoose");
 const { Server } = require("socket.io");
 const multer = require("multer");
-
-const Message = require("./models/message");
-const Room = require("./models/room");
-
-mongoose.connect("mongodb://127.0.0.1:27017/chatlab");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);const path = require("path");
+const io = new Server(server);
 
-app.use(express.static(path.join(__dirname, "../public")));
+const PORT = process.env.PORT || 3000;
 
+/* ---------- STATIC ---------- */
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
+/* ---------- FILE UPLOAD ---------- */
 const upload = multer({ dest: "uploads/" });
 app.use("/uploads", express.static("uploads"));
 
-/* -------- FILE UPLOAD -------- */
 app.post("/upload", upload.single("file"), (req, res) => {
   res.json({ path: `/uploads/${req.file.filename}` });
 });
 
-/* -------- SOCKET -------- */
+/* ---------- IN-MEMORY STORAGE ---------- */
+
+// rooms = {
+//   roomName: { password, admin }
+// }
+const rooms = {};
+
+// messages = {
+//   roomName: [ messageObj ]
+// }
+const messages = {};
+
+// online users
+// socketId → { name, room }
 const onlineUsers = {};
 
+/* ---------- SOCKET ---------- */
 io.on("connection", socket => {
 
-  socket.on("join", async ({ name, room, password }) => {
-    const r = await Room.findOne({ name: room });
-    if (r && r.password && r.password !== password) {
+  /* JOIN ROOM */
+  socket.on("join", ({ name, room, password }) => {
+
+    // create room if not exists
+    if (!rooms[room]) {
+      rooms[room] = {
+        password: password || null,
+        admin: name
+      };
+      messages[room] = [];
+    }
+
+    // password check
+    if (rooms[room].password && rooms[room].password !== password) {
       socket.emit("errorMsg", "Wrong room password");
       return;
     }
@@ -43,26 +64,36 @@ io.on("connection", socket => {
     socket.room = room;
 
     onlineUsers[socket.id] = { name, room };
-    io.to(room).emit("onlineUsers",
+
+    // send online users
+    io.to(room).emit(
+      "onlineUsers",
       Object.values(onlineUsers).filter(u => u.room === room)
     );
 
-    const messages = await Message.find({ room }).limit(50);
-    socket.emit("loadMessages", messages);
+    // load previous messages
+    socket.emit("loadMessages", messages[room]);
   });
 
-  socket.on("sendMessage", async msg => {
+  /* SEND MESSAGE */
+  socket.on("sendMessage", msg => {
     if (!msg.text && !msg.file) return;
 
-    const m = await Message.create({
-      ...msg,
-      room: socket.room,
+    const message = {
+      id: Date.now(),
+      user: socket.username,
+      text: msg.text || "",
+      file: msg.file || null,
+      time: new Date().toLocaleTimeString(),
       readBy: [socket.username]
-    });
+    };
 
-    io.to(socket.room).emit("newMessage", m);
+    messages[socket.room].push(message);
+
+    io.to(socket.room).emit("newMessage", message);
   });
 
+  /* TYPING */
   socket.on("typing", state => {
     socket.to(socket.room).emit("typing", {
       user: socket.username,
@@ -70,18 +101,21 @@ io.on("connection", socket => {
     });
   });
 
-  socket.on("read", async id => {
-    const m = await Message.findById(id);
-    if (!m.readBy.includes(socket.username)) {
+  /* READ RECEIPTS */
+  socket.on("read", id => {
+    const roomMsgs = messages[socket.room];
+    const m = roomMsgs.find(m => m.id === id);
+    if (m && !m.readBy.includes(socket.username)) {
       m.readBy.push(socket.username);
-      await m.save();
       io.to(socket.room).emit("readUpdate", m);
     }
   });
 
+  /* DISCONNECT */
   socket.on("disconnect", () => {
     const user = onlineUsers[socket.id];
     delete onlineUsers[socket.id];
+
     if (user) {
       io.to(user.room).emit(
         "onlineUsers",
@@ -91,9 +125,8 @@ io.on("connection", socket => {
   });
 
 });
-const PORT = process.env.PORT || 3000;
 
+/* ---------- START ---------- */
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
